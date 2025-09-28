@@ -12,5 +12,3 @@ The exercise consists of three different versions of the same app:
 3. **React Native Version**: A cross-platform mobile app developed using React Native. -> [React Native Version README](react-native/README.md)
 
 > Each version is contained in its own subdirectory within the main project directory.
-
-
