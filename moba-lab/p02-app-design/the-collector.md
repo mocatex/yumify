@@ -100,3 +100,12 @@ As **Lena (a multi-category collector)**, I want to **snap a photo of an item an
 7. Item listed; tap to view details, sources, photos; optional export/share
 
 ---
+
+## 6) Wireframes
+
+![Wireframes](images/moba-Page%201.png)
+
+
+## 7) Mockup
+
+![Mockup](images/moba-Page%202.png)
