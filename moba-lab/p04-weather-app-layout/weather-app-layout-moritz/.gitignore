@@ -1,0 +1,39 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# IDE
+.idea/
+
+# Gradle
+.gradle/
+**/build/
+.cxx/
+.externalNativeBuild/
+
+# Keystores & secrets (if you add signing)
+*.jks
+*.keystore
+key.properties
+*.env
+
+# Android/Studio misc
+captures/
+outputs/
+navigation.json
+
+# Kotlin/annotations caches
+**/kotlin/compile*/caches*/
+
