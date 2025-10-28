@@ -1,0 +1,28 @@
+
+/* center image and link */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#image-50 {
+    width: 50vw;
+}
+
+#image-100 {
+    width: 100vw;
+}
+
+/* style link as a button */
+#other-site {
+    font: bold 1em Arial, sans-serif;
+    align-self: center;
+    background-color: #1BA8CB;
+    color: #111;
+    margin: 1em auto;
+    padding: 1em;
+    text-decoration: none;
+    border-radius: 0.5em;
+}
