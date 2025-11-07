@@ -41,54 +41,40 @@ private fun YumifyApp() {
 }
 
 
-object Routes {
-    const val LIST = "list"
-    const val DETAIL = "detail/{itemId}"
-    fun detail(itemId: String) = "detail/$itemId"
-}
-
 @Composable
 fun AppNavHost(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
     // TODO inject your Repository or a ViewModel factory as needed
 ) {
     val nav = rememberNavController()
+    NavHost(navController = nav, startDestination = "list") {
 
-    NavHost(navController = nav, startDestination = Routes.LIST, modifier = modifier) {
-
-        composable(Routes.LIST) {
-            // TODO provide ViewModel via hiltViewModel() or factory
+        composable("list") {
             ListScreen(
-                onItemClick = { id -> nav.navigate(Routes.detail(id)) }
+                onOpenDetail = { id -> nav.navigate("detail/$id") }
             )
         }
 
         composable(
-            route = Routes.DETAIL,
-            arguments = listOf(navArgument("itemId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("itemId") ?: return@composable
+            route = "detail/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) {
+            // for you Julien :)
+            val itemId = it.arguments?.getString("id") ?: ""
             DetailScreen(
-                itemId = id,
+                itemId = itemId,
                 onBack = { nav.popBackStack() }
             )
         }
     }
+
 }
 
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Yumify_androidTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    Yumify_androidTheme {
+//        Greeting("Android")
+//    }
+//}
