@@ -9,7 +9,7 @@ fun DetailScreen(
     itemId: String,
     onBack: () -> Unit
 ) {
-    Text("Detail Screen for item: itemId")
+    Text("Detail Screen for item: $itemId")
     // TODO: fetch or read cached item by id
     // TODO: show top app bar with Back action calling onBack()
 }
