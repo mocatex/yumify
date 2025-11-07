@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-}
+    alias(libs.plugins.kotlin.serialization)}
 
 android {
     namespace = "ch.moritz.yumify_android"
@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.benchmark.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,5 +59,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     implementation("androidx.navigation:navigation-compose:2.9.6")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+
 
 }
