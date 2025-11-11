@@ -32,3 +32,16 @@ suspend fun fetchRandomMeal(): List<Meal> {
     val dto = json.decodeFromString<SearchResponse>(raw)
     return dto.meals?.map { it.toDomain() } ?: emptyList()
 }
+
+suspend fun fetchMealDetails(id: String): MealDto? {
+    val base = "https://www.themealdb.com/api/json/v1/1/"
+    val url = base + "lookup.php?i=" + URLEncoder.encode(id, "UTF-8")
+
+    val raw = withContext(Dispatchers.IO) {
+        URL(url).openStream().bufferedReader().use { it.readText() }
+    }
+
+    val json = Json { ignoreUnknownKeys = true }
+    val dto = json.decodeFromString<SearchResponse>(raw)
+    return dto.meals?.firstOrNull()
+}

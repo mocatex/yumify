@@ -40,7 +40,7 @@ private fun YumifyApp() {
     }
 }
 
-
+@Preview(showBackground = true)
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier
