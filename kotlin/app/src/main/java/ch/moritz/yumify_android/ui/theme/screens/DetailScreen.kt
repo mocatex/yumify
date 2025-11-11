@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -95,7 +96,11 @@ fun DetailScreen(
                             .padding(vertical = 8.dp)
                     )
 
-                    Divider(Modifier.padding(vertical = 8.dp))
+                    HorizontalDivider(
+                        Modifier.padding(vertical = 8.dp),
+                        DividerDefaults.Thickness,
+                        DividerDefaults.color
+                    )
 
                     Text(
                         "Ingredients",
@@ -108,7 +113,11 @@ fun DetailScreen(
                 }
 
                 item {
-                    Divider(Modifier.padding(vertical = 12.dp))
+                    HorizontalDivider(
+                        Modifier.padding(vertical = 12.dp),
+                        DividerDefaults.Thickness,
+                        DividerDefaults.color
+                    )
                     Text("Instructions", style = MaterialTheme.typography.titleMedium)
                     Text(m.instructions.orEmpty(), Modifier.padding(top = 8.dp))
                 }
