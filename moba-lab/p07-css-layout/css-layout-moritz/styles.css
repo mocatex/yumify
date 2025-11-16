@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 3rem;
+}
+
+
+/* Task 1: hide elements based on screen orientation */
+@media (orientation: portrait) {
+    .landscape {
+        display: none;
+    }
+}
+
+@media (orientation: landscape) {
+    .portrait {
+        display: none;
+    }
+}
