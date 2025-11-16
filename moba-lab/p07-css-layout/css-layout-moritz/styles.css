@@ -1,8 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    font-size: 3rem;
+    font-size: 1.3rem;
+    box-sizing: border-box;
+
+    /* Flexbox page layout */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+h2 {
+    font-size: 3rem;
+}
 
 /* Task 1: hide elements based on screen orientation */
 @media (orientation: portrait) {
@@ -15,4 +24,67 @@ body {
     .portrait {
         display: none;
     }
+}
+
+
+header {
+    background: #BBB;
+    color: #fff;
+    padding: 1rem;
+}
+
+main {
+    flex: 1; /* fill remaining space between header and footer */
+    padding: 1rem;
+}
+
+footer {
+    background: #eee;
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column; /* default: labels ABOVE inputs */
+}
+
+/* Make inputs look reasonable */
+.form-row input {
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@media (min-width: 600px) {
+    .form-row {
+        flex-direction: row; /* labels ON THE LEFT of inputs */
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .form-row label {
+        width: 150px;
+        text-align: right;
+    }
+
+    .form-row input {
+        flex: 1; /* take remaining space */
+    }
+}
+
+button[type="submit"] {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background: #333;
+    color: white;
+    cursor: pointer;
 }
