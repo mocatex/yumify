@@ -1,3 +1,135 @@
-.visually-hidden {
-    display: none;
+/* general base adjustments */
+:root {
+    --input-background: #444444;
+    --background-color: #222222;
+    --primary-color: #D7C400;
+    --text-color: #EEEEEE;
+    --gray-color: #999999;
+    --text-color-light-bg: #222222;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    align-items: center;
+    background: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+}
+
+img, picture, video {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Search Page */
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#search-section {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 2em;
+    width: 100%;
+    justify-content: center;
+}
+
+input {
+    background: var(--input-background);
+    border: 1px solid var(--primary-color);
+    border-radius: 0.5em;
+    color: var(--text-color);
+    font-size: 1em;
+    outline: none;
+    padding: 0.5em;
+    flex: 0.5;
+    min-width: 8em;
+    max-width: 32em;
+}
+
+input:focus {
+    box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+button {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 0.5em;
+    color: var(--text-color-light-bg);
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0.5em;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Result List */
+#results-section {
+    width: 80%;
+    max-width: 50em;
+}
+
+#results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+    gap: 1.2em;
+}
+
+
+/* Search Result Card */
+
+.meal-card {
+    background: var(--input-background);
+    border-radius: 1em;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.3);
+    padding: 1em;
+}
+
+.meal-card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.meal-title {
+    margin: 0 0 0.3em 0;
+    color: var(--primary-color);
+}
+
+.meal-card-body {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+
+.meal-image {
+    border-radius: 0.5em;
+    width: 30%;
+}
+
+.meal-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.meal-id {
+    color: var(--gray-color);
 }
