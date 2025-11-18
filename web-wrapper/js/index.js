@@ -18,7 +18,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
     async function handleSearch(searchRandom = true) {
         const query = searchInput.value.trim();
-        if (!query) return;
 
         resultContainer.innerHTML = "Loading...";
         
