@@ -51,4 +51,4 @@ async function getMeals(query, random = true) {
     }
 }
 
-export {getMeals};
+export {getMeals, fetchJson};
