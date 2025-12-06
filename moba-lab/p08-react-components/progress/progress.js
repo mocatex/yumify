@@ -32,7 +32,7 @@ class CustomProgressBar extends HTMLElement {
               }
           </style>
           <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-              <div class="bar" style="width: 0px;"></div>
+              <div class="bar" style="width: 0;"></div>
               <div class="label">0%</div>
           </div>
       `;

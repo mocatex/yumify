@@ -7,7 +7,7 @@ window.onload = () => {
   document.querySelector('p:nth-child(2) custom-progress-bar');
   
   var pb = document.querySelector('p:nth-child(3) custom-progress-bar');
-  setInterval(() => changePb(pb), 20);
+  setInterval(() => changePb(pb), 10);
 }
 
 const changePb = (pb) => {
