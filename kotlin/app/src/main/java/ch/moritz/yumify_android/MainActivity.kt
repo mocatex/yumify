@@ -44,7 +44,6 @@ private fun YumifyApp() {
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier
-    // TODO inject your Repository or a ViewModel factory as needed
 ) {
     val nav = rememberNavController()
     NavHost(navController = nav, startDestination = "list") {
