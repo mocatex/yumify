@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import Light from "./Light.jsx";
 import "./TrafficLight.css";
 import {useState} from "react";
@@ -22,5 +24,9 @@ export default function TrafficLight({id}) {
             <Light color="green" active={activeColor === "green"} />
         </div >
     );
+}
+
+TrafficLight.propTypes = {
+    id: PropTypes.string.isRequired
 }
 
