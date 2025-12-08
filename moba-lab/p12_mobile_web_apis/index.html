@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyroscope Arrow</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #arrow {
+            width: 250px;
+            height: 250px;
+            transition: transform 0.01s ease;
+        }
+    </style>
+
+<body>
+    <svg id="arrow" data-name="1-Arrow Up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+        <path d="m26.71 10.29-10-10a1 1 0 0 0-1.41 0l-10 10 1.41 1.41L15 3.41V32h2V3.41l8.29 8.29z" />
+    </svg>
+</body>
+<script>
+    if (window.DeviceOrientationEvent) {
+        let lastAlpha = null;
+        let totalRotation = 0;
+        let start_orientation = 90;
+
+        window.addEventListener('deviceorientation', function (event) {
+            if (event.alpha !== null) {
+                if (lastAlpha !== null) {
+                    let diff = event.alpha - lastAlpha;
+                    if (diff > 180) diff -= 360;
+                    else if (diff < -180) diff += 360;
+                    totalRotation += diff;
+                } else {
+                    lastAlpha = event.alpha;
+                    lastAlpha += start_orientation;
+                    return;
+                }
+
+                lastAlpha = event.alpha;
+                console.log(`Device orientation alpha: ${event.alpha}, totalRotation: ${totalRotation}`);
+                document.getElementById('arrow').style.transform = `rotate(${totalRotation}deg)`;
+            }
+        });
+    } else {
+        alert("Device Orientation API not supported.");
+    }
+</script>
+</head>
+
+</html>
