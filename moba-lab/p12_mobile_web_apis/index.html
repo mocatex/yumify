@@ -1,100 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gyroscope Arrow</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-
-        #arrow {
-            width: 250px;
-            height: 250px;
-            transition: transform 0.01s ease;
-        }
-    </style>
-</head>
-
-<body>
-    <svg id="arrow" data-name="1-Arrow Up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <path d="m26.71 10.29-10-10a1 1 0 0 0-1.41 0l-10 10 1.41 1.41L15 3.41V32h2V3.41l8.29 8.29z" />
-    </svg>
-</body>
-<script>
-        // Console logging to server
-    function sendLogToServer(level, ...args) {
-        const message = args.map(arg =>
-            typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
-        ).join(' ');
-
-        fetch('/log', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ level: level, message: message })
-        }).catch(err => { });
-    }
-
-    // Override console methods
-    const originalLog = console.log;
-    const originalError = console.error;
-    const originalWarn = console.warn;
-
-    console.log = function (...args) {
-        originalLog.apply(console, args);
-        sendLogToServer('log', ...args);
-    };
-
-    console.error = function (...args) {
-        originalError.apply(console, args);
-        sendLogToServer('error', ...args);
-    };
-
-    console.warn = function (...args) {
-        originalWarn.apply(console, args);
-        sendLogToServer('warn', ...args);
-    };
-
-    // Catch unhandled errors
-    window.addEventListener('error', function (e) {
-        sendLogToServer('error', `Uncaught error: ${e.message} at ${e.filename}:${e.lineno}`);
-    });
-
-    
-    if (window.DeviceOrientationEvent) {
-        let lastAlpha = null;
-        let totalRotation = 0;
-        let start_orientation = 90;
-
-        window.addEventListener('deviceorientation', function (event) {
-            if (event.alpha !== null) {
-                if (lastAlpha !== null) {
-                    let diff = event.alpha - lastAlpha;
-                    if (diff > 180) diff -= 360;
-                    else if (diff < -180) diff += 360;
-                    totalRotation += diff;
-                } else {
-                    lastAlpha = event.alpha;
-                    lastAlpha += start_orientation;
-                    return;
-                }
-
-                lastAlpha = event.alpha;
-                console.log(`Device orientation alpha: ${event.alpha}, totalRotation: ${totalRotation}`);
-                document.getElementById('arrow').style.transform = `rotate(${totalRotation}deg)`;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gyroscope Arrow</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f0f0f0;
             }
+
+            #arrow {
+                width: 250px;
+                height: 250px;
+                transition: transform 0.01s ease;
+            }
+
+            #requestButton {
+                padding: 15px 30px;
+                font-size: 18px;
+                background-color: #007aff;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+
+            #requestButton:hover {
+                background-color: #0051d5;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <button id="requestButton">Aktiviere Gyroscope</button>
+        <svg id="arrow" data-name="1-Arrow Up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="hidden">
+            <path d="m26.71 10.29-10-10a1 1 0 0 0-1.41 0l-10 10 1.41 1.41L15 3.41V32h2V3.41l8.29 8.29z" />
+        </svg>
+    </body>
+    <script>
+        // Console logging to server
+        function sendLogToServer(level, ...args) {
+            const message = args.map(arg =>
+                    typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+            ).join(' ');
+
+            fetch('/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ level: level, message: message })
+            }).catch(err => { });
+        }
+
+        // Override console methods
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function (...args) {
+            originalLog.apply(console, args);
+            sendLogToServer('log', ...args);
+        };
+
+        console.error = function (...args) {
+            originalError.apply(console, args);
+            sendLogToServer('error', ...args);
+        };
+
+        console.warn = function (...args) {
+            originalWarn.apply(console, args);
+            sendLogToServer('warn', ...args);
+        };
+
+        // Catch unhandled errors
+        window.addEventListener('error', function (e) {
+            sendLogToServer('error', `Uncaught error: ${e.message} at ${e.filename}:${e.lineno}`);
         });
-    } else {
-        alert("Device Orientation API not supported.");
-    }
-</script>
+
+
+        const requestButton = document.getElementById('requestButton');
+        const arrow = document.getElementById('arrow');
+
+        async function requestPermission() {
+            try {
+                // Für iOS 13+ ist eine explizite Erlaubnis erforderlich
+                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    console.log('Requesting permission for iOS...');
+                    const permission = await DeviceOrientationEvent.requestPermission();
+                    console.log('Permission result:', permission);
+
+                    if (permission === 'granted') {
+                        startGyroscope();
+                    } else {
+                        alert('Berechtigung verweigert');
+                    }
+                } else {
+                    // Für andere Geräte (Android, Desktop)
+                    console.log('No permission needed, starting directly...');
+                    startGyroscope();
+                }
+            } catch (error) {
+                console.error('Error requesting permission:', error);
+                alert('Fehler beim Anfordern der Berechtigung: ' + error.message);
+            }
+        }
+
+        function startGyroscope() {
+            requestButton.classList.add('hidden');
+            arrow.classList.remove('hidden');
+
+            if (window.DeviceOrientationEvent) {
+                let lastAlpha = null;
+                let totalRotation = 0;
+                let start_orientation = 90;
+
+                window.addEventListener('deviceorientation', function (event) {
+                    if (event.alpha !== null) {
+                        if (lastAlpha !== null) {
+                            let diff = event.alpha - lastAlpha;
+                            if (diff > 180) diff -= 360;
+                            else if (diff < -180) diff += 360;
+                            totalRotation += diff;
+                        } else {
+                            lastAlpha = event.alpha;
+                            lastAlpha += start_orientation;
+                            return;
+                        }
+
+                        lastAlpha = event.alpha;
+                        console.log(`Device orientation alpha: ${event.alpha}, totalRotation: ${totalRotation}`);
+                        document.getElementById('arrow').style.transform = `rotate(${totalRotation}deg)`;
+                    }
+                });
+            } else {
+                alert("Device Orientation API not supported.");
+            }
+        }
+
+        requestButton.addEventListener('click', requestPermission);
+    </script>
 
 </html>
