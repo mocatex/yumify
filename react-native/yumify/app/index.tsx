@@ -1,10 +1,10 @@
 import { View, TextInput, Button, FlatList, Text, Switch } from "react-native";
 import { useState, useEffect } from "react";
-import { searchMeals, randomMeal, Meal } from "../src/api/meals";
-import { MealCard } from "../src/components/MealCard";
+import { searchMeals, randomMeal, Meal } from "@/src/api/meals";
+import { MealCard } from "@/src/components/MealCard";
 import { useRouter } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "../src/context/ThemeContext";
+import { useTheme } from "@/src/context/ThemeContext";
 import { global as styles } from "../src/styles/global";
 
 export default function IndexScreen() {
