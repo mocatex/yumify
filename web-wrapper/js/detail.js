@@ -22,20 +22,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-/** Extract ?id=xxxx from URL */
 function getMealIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
 
-/** Fetch single meal from API */
 async function loadMealDetails(id) {
   const url = `${API_BASE_URL}lookup.php?i=${id}`;
   const json = await fetchJson(url);
   return json.meals?.[0] ?? null;
 }
 
-/** Extract dynamic ingredient list (same as Kotlin getIngredients()) */
 function extractIngredients(meal) {
   const list = [];
   for (let i = 1; i <= 20; i++) {
@@ -49,7 +46,6 @@ function extractIngredients(meal) {
   return list;
 }
 
-/** Render entire detail page */
 function renderMealDetails(meal, container) {
   if (!meal) {
     container.innerHTML = "<p>Meal not found.</p>";
