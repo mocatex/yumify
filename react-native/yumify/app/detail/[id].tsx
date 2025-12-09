@@ -5,41 +5,21 @@ import {useTheme} from "@/src/context/ThemeContext";
 import {global as styles} from "../../src/styles/global";
 import {useEffect, useState} from "react";
 
-const BASE_URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
-
 export default function DetailPage() {
     const params = useLocalSearchParams<{ id?: string }>();
     const id = params.id ?? "unknown";
 
 
     const [data, setData] = useState<MealDetail | null>(null);
-    const [ingredients, setIngredients] = useState<string[]>([]);
 
     const {theme} = useTheme();
 
     useEffect(() => {
         getMealDetails(id).then((meal) => {
             setData(meal);
-
-            if (!meal) {
-                setIngredients([]);
-                return;
-            }
-
-            const list: string[] = [];
-            // create the ingredient list from data
-            for (let i = 1; i <= 20; i++) {
-                const key = `strIngredient${i}` as keyof MealDetail;
-                const ingredient = meal[key];
-                if (ingredient && ingredient.trim() !== "") {
-                    list.push(ingredient);
-                }
-            }
-            setIngredients(list);
         })
             .catch((error) => {
                 setData(null);
-                setIngredients([]);
                 console.error(error);
             });
 
@@ -66,9 +46,9 @@ export default function DetailPage() {
             {/* Ingredients list */}
             <Text style={{fontWeight: "bold", color: theme.colors.text}} >Ingredients:</Text >
             <View style={styles.ingredientsList} >
-                {ingredients.map((ingredient, index) => (
+                {data.ingredients.map((ingredient, index) => (
                     <Text key={index} style={[styles.ingredientItem, {color: theme.colors.text}]} >
-                        {"\u2022"} {ingredient}
+                        {"\u2022"} {ingredient.measure} {ingredient.name}
                     </Text >
                 ))}
             </View >

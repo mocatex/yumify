@@ -9,31 +9,13 @@ export interface Meal {
 }
 
 export interface MealDetail {
+    idMeal: string;
     strMeal: string;
     strCategory: string;
     strArea: string;
     strInstructions: string;
     strMealThumb: string;
-    strIngredient1: string;
-    strIngredient2: string;
-    strIngredient3: string;
-    strIngredient4: string;
-    strIngredient5: string;
-    strIngredient6: string;
-    strIngredient7: string;
-    strIngredient8: string;
-    strIngredient9: string;
-    strIngredient10: string;
-    strIngredient11: string;
-    strIngredient12: string;
-    strIngredient13: string;
-    strIngredient14: string;
-    strIngredient15: string;
-    strIngredient16: string;
-    strIngredient17: string;
-    strIngredient18: string;
-    strIngredient19: string;
-    strIngredient20: string;
+    ingredients: Array<{ name: string; measure: string }>;
 }
 
 export async function searchMeals(query: string): Promise<Meal[]> {
@@ -48,5 +30,24 @@ export async function randomMeal(): Promise<Meal[]> {
 
 export async function getMealDetails(id: string): Promise<MealDetail | null> {
     const json = await fetch(API + "lookup.php?i=" + id).then(r => r.json());
-    return json.meals ? json.meals[0] : null;
+    if (!json.meals) return null;
+    
+    const meal = json.meals[0];
+    
+    const ingredients = Object.keys(meal)
+        .filter(key => key.startsWith('strIngredient') && meal[key]?.trim())
+        .map((key, i) => ({
+            name: meal[key].trim(),
+            measure: meal[`strMeasure${i + 1}`]?.trim() || ''
+        }));
+    
+    return {
+        idMeal: meal.idMeal,
+        strMeal: meal.strMeal,
+        strCategory: meal.strCategory,
+        strArea: meal.strArea,
+        strInstructions: meal.strInstructions,
+        strMealThumb: meal.strMealThumb,
+        ingredients
+    };
 }
